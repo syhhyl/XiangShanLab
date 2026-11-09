@@ -1,0 +1,48 @@
+{
+ "checks": [
+  {
+   "name": "lower half S2 SQ forward mask is 0",
+   "pass": true
+  },
+  {
+   "name": "lower half S2 SBuffer forward mask is 0",
+   "pass": true
+  },
+  {
+   "name": "upper half S2 SQ mask covers 0xfc03",
+   "pass": true
+  },
+  {
+   "name": "upper half SQ forward data contains 0x20008",
+   "pass": true
+  },
+  {
+   "name": "committed load data is 0",
+   "pass": true
+  },
+  {
+   "name": "committed load writes physical register 95",
+   "pass": true
+  }
+ ],
+ "evidence": {
+  "lower_s0_cycle": 12279,
+  "upper_s0_cycle": 12280,
+  "lower_s2": {
+   "cycle": 12281,
+   "sq_mask": 0,
+   "sb_mask": 0
+  },
+  "upper_s2": {
+   "cycle": 12282,
+   "sq_mask": 64515,
+   "sq_data": 158465996435085592220485550080
+  },
+  "commit": {
+   "cycle": 12283,
+   "vaddr": 1125899905159370,
+   "data": 0,
+   "pdest": 95
+  }
+ }
+}

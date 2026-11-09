@@ -1,0 +1,172 @@
+{
+ "checks": [
+  {
+   "name": "final AMO state is s_wait_flush_sbuffer_resp (3)",
+   "pass": true
+  },
+  {
+   "name": "final sqempty is 0",
+   "pass": true
+  },
+  {
+   "name": "final flush_empty is 0",
+   "pass": true
+  },
+  {
+   "name": "slot3 hasException=1",
+   "pass": true
+  },
+  {
+   "name": "slot3 committed=0",
+   "pass": true
+  },
+  {
+   "name": "slot3 addrValid=1 and dataValid=1",
+   "pass": true
+  },
+  {
+   "name": "slot3 vaddr=0x5c0",
+   "pass": true
+  },
+  {
+   "name": "slot3 robIdx=0x12e",
+   "pass": true
+  },
+  {
+   "name": "deqPtr=3 at end",
+   "pass": true
+  },
+  {
+   "name": "commitPtr=3 at end",
+   "pass": true
+  },
+  {
+   "name": "vecMbCommit pulses for slot3",
+   "pass": true
+  },
+  {
+   "name": "retire pointer reaches 5",
+   "pass": true
+  },
+  {
+   "name": "redirect recovery pointer is 5",
+   "pass": true
+  }
+ ],
+ "evidence": {
+  "wave_cycles": [
+   0,
+   20353
+  ],
+  "final_atom_state": 3,
+  "final_sqempty": 0,
+  "final_flush_empty": 0,
+  "slot3": {
+   "addrValid": 1,
+   "dataValid": 1,
+   "hasException": 1,
+   "committed": 0,
+   "vaddr": 1472,
+   "robIdx": 302,
+   "numLsElem": 2
+  },
+  "pointers": {
+   "deqPtrExt_0_value": 3,
+   "rdataPtrExt_0_value": 3,
+   "commitPtrExt_0_value": 3,
+   "io_fromVirtualStoreQueue_physicalQueueEnqPtr_value": 5
+  },
+  "ctrlEntries_3_hasException": [
+   [
+    5200,
+    1
+   ]
+  ],
+  "ctrlEntries_3_vecMbCommit": [
+   [
+    5204,
+    1
+   ],
+   [
+    5206,
+    0
+   ]
+  ],
+  "retireValidReg": [
+   [
+    4796,
+    1
+   ],
+   [
+    4797,
+    0
+   ],
+   [
+    5080,
+    1
+   ],
+   [
+    5081,
+    0
+   ],
+   [
+    5194,
+    1
+   ],
+   [
+    5195,
+    0
+   ],
+   [
+    5206,
+    1
+   ],
+   [
+    5207,
+    0
+   ]
+  ],
+  "retireReqNumReg": [
+   [
+    4796,
+    1
+   ],
+   [
+    5206,
+    2
+   ]
+  ],
+  "toPhysicalQueueRetirePtr_value": [
+   [
+    4797,
+    1
+   ],
+   [
+    5081,
+    2
+   ],
+   [
+    5195,
+    3
+   ],
+   [
+    5207,
+    5
+   ]
+  ],
+  "io_toPhysicalQueue_redirectPtr_bits_value": [
+   [
+    2,
+    0
+   ],
+   [
+    4804,
+    1
+   ],
+   [
+    5216,
+    5
+   ]
+  ]
+ }
+}

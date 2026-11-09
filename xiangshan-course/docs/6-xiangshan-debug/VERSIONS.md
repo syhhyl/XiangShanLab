@@ -21,6 +21,11 @@
 | `xiangshan-issue-6137` | `kunminghu-v3` `3931c5112c` + V2 对照 `0fa7bb825` | 源码 + 波形 | 双基线并列，结论已分别标注 |
 | `xiangshan-issue-6149` | 回放分支 `debug-2fetch-base` `e85a929a3` + V2 对照 `0fa7bb82` | 源码 + 波形 | 同 6135 |
 | `xiangshan-issue-6265` | `kunminghu-v3` `b90dbba4`（2026-07-17）、`cfd6b141`（2026-03-23） | 源码 + 程序运行 | 两个提交都不是 `kunminghu-v2` 祖先，属 V3 期 |
+| `xiangshan-issue-6289` | `kunminghu-v3` `4cf8b8d4ae`（2026-07-24） | 源码 + 波形 | 与 #6267 同类的 vector Store Queue 残留；Issue 仍 open |
+| `xiangshan-issue-6294` | `kunminghu-v3` `4cf8b8d4ae`（2026-07-24）；Issue 原基线 `2b5769e8b2`、`d97789de12` | 源码 + 波形 | 根因是 #6229 的跨 16B forwarding 丢失，不是 AMO 改坏 rd |
+| `xiangshan-issue-6343` | `kunminghu-v3` `c4cfd2b78`（2026-08-11）→ 修复 `cbf2d93f3`（#6316） | 源码 + 模块级仿真 | `hardwareError` 跨原子操作残留；NEMU/QEMU 不适用 |
+
+> 任务 [XiangShanLab#82](https://github.com/OpenXiangShan/XiangShanLab/issues/82) 的 AMO 异常专题由 `xiangshan-issue-6289`、`xiangshan-issue-6294`、`xiangshan-issue-6343` 三篇组成。三篇的结论分别绑定到上表列出的提交。
 
 ### 2.2 昆明湖 V2 开发期（已补基线声明）
 

@@ -1,0 +1,28 @@
+=== RUN original ===
+variant=original reset complete
+cycle 5 STA fire addr=0x1000 fuOpType=0xb
+cycle 6 TLB resp #1 (expected ignored) addr=0x1000
+cycle 7 TLB resp #2 accepted addr=0x1000
+cycle 8 STD fire data=0xdeadbeefcafebabe
+cycle 10 DCACHE req fire cmd=0x4 addr=0x1000
+cycle 11 DCACHE resp fire miss=0 replay=0 corrupt=1 denied=0
+cycle 13 opA WB fire bit6=0 bit19=1
+cycle 14 STA fire addr=0x2003 fuOpType=0xb
+cycle 15 TLB resp #1 (expected ignored) addr=0x2003
+cycle 16 TLB resp #2 accepted addr=0x2003
+cycle 17 opB WB fire bit6=1 bit19=1
+PASS[original]: opA bit19=1; opB bit6=1 bit19=1; opB dcache requests=0
+=== RUN fixed ===
+variant=fixed reset complete
+cycle 5 STA fire addr=0x1000 fuOpType=0xb
+cycle 6 TLB resp #1 (expected ignored) addr=0x1000
+cycle 7 TLB resp #2 accepted addr=0x1000
+cycle 8 STD fire data=0xdeadbeefcafebabe
+cycle 10 DCACHE req fire cmd=0x4 addr=0x1000
+cycle 11 DCACHE resp fire miss=0 replay=0 corrupt=1 denied=0
+cycle 13 opA WB fire bit6=0 bit19=1
+cycle 14 STA fire addr=0x2003 fuOpType=0xb
+cycle 15 TLB resp #1 (expected ignored) addr=0x2003
+cycle 16 TLB resp #2 accepted addr=0x2003
+cycle 17 opB WB fire bit6=1 bit19=0
+PASS[fixed]: opA bit19=1; opB bit6=1 bit19=0; opB dcache requests=0
