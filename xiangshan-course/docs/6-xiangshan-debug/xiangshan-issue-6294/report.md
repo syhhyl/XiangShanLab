@@ -98,6 +98,8 @@ right = 0x0000000000020008, wrong = 0x0000000000000000
 
 lower half 的 mask 为 0。`NewLoadUnit` 因此判定没有 full forward，访问 DCache。DCache 返回旧数据。`mergeData` 在没有 mask 的字节上保留旧数据，所以 lower half 保持 0。
 
+> 该 mask=0 只属于本文的 DefaultConfig 波形。2026-11-09 的 TestkitV3 波形中 mask 为 `0xfc03` 且数据正确，但最终写回仍为 0；见第 10 节。
+
 upper half 在 12282 得到 `0xfc03`，其 forward data 中有正确的 `0x20008`。但此时 head 部分已经按旧数据处理。最终写回仍是 0。
 
 ### 3.2 store 数据是 0x20008
@@ -225,3 +227,20 @@ qemu-system-riscv64 -M virt -cpu rv64 -m 2G -nographic \
 | `waveform-verification/evidence.json` | 提取结果 |
 
 `replay.fst` 未纳入课程仓库。运行 `./replay.sh` 重新生成。
+
+## 10. 实锤补充（2026-11-09）
+
+在 `~/Test-infra/adapters/bug-evidence/` 新增全核证据包：
+
+```text
+xiangshan/xiangshan-amo-fault-forward-miss
+```
+
+该包在 `4cf8b8d4ae` 上重建了 `TestkitV3Config` FST 模型。重新运行结果：
+
+- DiffTest 仍报告 `s1`：NEMU `0x20008`，DUT `0`，`pc=0xffffffffffe02370`。
+- Testkit 波形锚点 cycle 9086：S0 lower/upper 为 9082/9083，S2 forward 在 9085。
+- lower half 的 SQ forward mask 为 `0xfc03`，SQ forward data 含 `0x20008`。
+- load 写回仍为 `0`。
+
+这修正了本文第 3.1 节的一个细节：DefaultConfig 波形中 lower half mask 为 0，而 Testkit 波形中 mask 为 `0xfc03` 且数据正确，但最终写回仍错误。两版都提交 0，说明缺陷不只在 mask 覆盖，还在 unaligned 数据选择或写回阶段。该阶段尚未逐字节定位。证据包把结论限定为“AMO 未改坏 rd；跨 16B load 提交错误值 0；与 #6229 同族”。

@@ -272,3 +272,19 @@ qemu-system-riscv64 -M virt -cpu rv64 -m 2G -nographic \
 | `waveform-verification/evidence.json` | 提取结果 |
 
 `replay.fst` 未纳入课程仓库。运行 `./replay.sh` 重新生成。
+
+## 10. 实锤补充（2026-11-09）
+
+在 `~/Test-infra/adapters/bug-evidence/` 新增全核证据包：
+
+```text
+xiangshan/xiangshan-vec-store-fault-amo-hang
+```
+
+该包在 `4cf8b8d4ae` 上重建了 `TestkitV3Config` FST 模型，并重新运行同一 seed。结果：
+
+- DUT `instrCnt=334`、`cycleCnt=17072`；15000 周期无提交。
+- DiffTest 报告 `a2`：NEMU `0xc0c0c0c0`，DUT `0xc6fe9d4ace7be0fa`。
+- Testkit 波形锚点 cycle 15000：`atom_state=3`、`sqempty=0`、`flush_empty=0`、`slot3_hasException=1`、`slot3_committed=0`、`deq_ptr=3`、`retire_ptr=5`、`redirect_ptr=5`。
+
+本文的 20354/20299 周期和 5199–5216 指针转移来自 DefaultConfig 波形。Testkit 包从 15000 开始，捕获的是转移之后的稳定死锁状态。两份证据指向同一失败签名。

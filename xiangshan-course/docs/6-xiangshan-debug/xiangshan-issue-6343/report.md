@@ -177,3 +177,20 @@ def resetFSM(): Unit = {
 | `repro/README.md` | 原始复现说明 |
 | `repro/run.log` | 原始运行日志 |
 | `repro/run.sh` | 从用户提供的 `AtomicsUnit.sv` 重建并运行 |
+
+## 9. 实锤补充（2026-11-09）
+
+在 `~/Test-infra/adapters/bug-evidence/` 新增模块级证据包：
+
+```text
+xiangshan/xiangshan-amo-stale-hwerror
+```
+
+包内保留原版/修复版可执行文件、harness、修复 RTL 和运行日志。本机重跑结果：
+
+```text
+original: opA bit6=0 bit19=1; opB bit6=1 bit19=1
+fixed:    opB bit6=1 bit19=0
+```
+
+该包没有架构级波形。`waveform/README.md` 说明了原因：`hardwareError` 由 TileLink `tl_corrupt` 注入，程序、Spike 和 QEMU 都不能产生该事件。
